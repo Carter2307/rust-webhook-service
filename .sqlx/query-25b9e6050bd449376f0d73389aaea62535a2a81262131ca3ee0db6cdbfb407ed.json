@@ -1,0 +1,80 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO events (id, webhook_id, data, state, created_at, updated_at)\n            VALUES ($1, $2, $3, $4::events_state, $5, NULL)\n            RETURNING *",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "webhook_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "data",
+        "type_info": "Jsonb"
+      },
+      {
+        "ordinal": 3,
+        "name": "state",
+        "type_info": {
+          "Custom": {
+            "name": "events_state",
+            "kind": {
+              "Enum": [
+                "Pending",
+                "Partial",
+                "Error",
+                "Processed"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 4,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 5,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Jsonb",
+        {
+          "Custom": {
+            "name": "events_state",
+            "kind": {
+              "Enum": [
+                "Pending",
+                "Partial",
+                "Error",
+                "Processed"
+              ]
+            }
+          }
+        },
+        "Timestamptz"
+      ]
+    },
+    "nullable": [
+      false,
+      true,
+      true,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "25b9e6050bd449376f0d73389aaea62535a2a81262131ca3ee0db6cdbfb407ed"
+}
